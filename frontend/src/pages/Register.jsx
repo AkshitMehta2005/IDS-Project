@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../utils/api";
 
@@ -14,6 +14,8 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,6 +41,7 @@ const Register = () => {
 
       setSuccess("Registration successful! Please login.");
       console.log("Register Response:", data);
+      navigate("/upload");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed!");
     }

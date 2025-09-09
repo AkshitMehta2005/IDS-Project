@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
-  // mock login state (replace with context or auth)
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // check token when Navbar mounts
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleLogout = () => {
+    localStorage.removeItem("token"); // remove JWT
     setIsLoggedIn(false);
+    navigate("/login"); // redirect to login
   };
 
   return (
@@ -31,10 +41,7 @@ const Navbar = () => {
               <li><Link to="/predict" className="hover:underline">Predict</Link></li>
               <li><Link to="/upload" className="hover:underline">Upload</Link></li>
               <li>
-                <button 
-                  onClick={handleLogout} 
-                  className="hover:underline"
-                >
+                <button onClick={handleLogout} className="hover:underline">
                   Logout
                 </button>
               </li>

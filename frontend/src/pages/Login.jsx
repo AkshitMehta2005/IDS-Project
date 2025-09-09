@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";   // ✅ import api (axios instance)
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,13 +20,16 @@ const Login = () => {
     setError("");
 
     try {
-      const { data } = await axios.post("/api/v1/user/login", {
+      const { data } = await api.post("/api/v1/user/login", {
         email: formData.email,
         password: formData.password,
       });
 
-      localStorage.setItem("token", data.token); // save JWT
-      navigate("/"); // redirect to Home after login
+      // ✅ Save token and redirect
+      localStorage.setItem("token", data.token);
+      console.log("Login Success:", data);
+
+      navigate("/upload"); 
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials!");
     }
@@ -42,7 +45,6 @@ const Login = () => {
         {error && <p className="text-red-500 text-center mb-3">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email */}
           <input
             type="email"
             name="email"
@@ -53,7 +55,6 @@ const Login = () => {
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
           />
 
-          {/* Password */}
           <input
             type="password"
             name="password"
@@ -84,7 +85,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
