@@ -40,9 +40,13 @@ const Register = () => {
       });
 
       setSuccess("Registration successful! Please login.");
+      // ✅ Save token and redirect
       localStorage.setItem("token", data.token);
-      console.log("Register Response:", data);
-      window.location.reload();
+
+      // 🔔 Trigger storage event manually so Navbar updates
+      window.dispatchEvent(new Event("storage"));
+
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed!");
     }

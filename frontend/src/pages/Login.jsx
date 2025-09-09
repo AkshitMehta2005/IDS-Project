@@ -27,10 +27,12 @@ const Login = () => {
 
       // ✅ Save token and redirect
       localStorage.setItem("token", data.token);
-      console.log("Login Success:", data);
 
-      window.location.reload();
-      navigate("/"); 
+      // 🔔 Trigger storage event manually so Navbar updates
+      window.dispatchEvent(new Event("storage"));
+
+      navigate("/");
+
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials!");
     }
