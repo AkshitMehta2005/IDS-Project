@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Predict from "./pages/Predict";
 import Upload from "./pages/Upload";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Wrapper to control footer visibility
 function Layout() {
@@ -24,8 +25,23 @@ function Layout() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/predict" element={<Predict />} />
-          <Route path="/upload" element={<Upload />} />
+          {/* Protected Routes */}
+          <Route
+            path="/predict"
+            element={
+              <ProtectedRoute>
+                <Predict />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/upload"
+            element={
+              <ProtectedRoute>
+                <Upload />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
       {!hideFooter && <Footer />}
