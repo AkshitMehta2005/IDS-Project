@@ -29,7 +29,8 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       console.log("Login Success:", data);
 
-      navigate("/upload"); 
+      window.location.reload();
+      navigate("/"); 
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials!");
     }

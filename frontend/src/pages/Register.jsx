@@ -40,8 +40,9 @@ const Register = () => {
       });
 
       setSuccess("Registration successful! Please login.");
+      localStorage.setItem("token", data.token);
       console.log("Register Response:", data);
-      navigate("/upload");
+      window.location.reload();
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed!");
     }
